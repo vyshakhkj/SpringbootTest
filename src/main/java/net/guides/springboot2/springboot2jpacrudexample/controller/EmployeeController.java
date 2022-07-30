@@ -14,6 +14,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 public class EmployeeController {
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -30,9 +31,9 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees")
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        employee = employeeService.createEmployee(employee);
-        return employee;
+    public ResponseEntity <Employee> createEmployee(@Valid @RequestBody Employee employee) {
+        ResponseEntity<Employee> employeecreate = employeeService.createEmployee(employee);
+        return employeecreate;
     }
 
     @PutMapping("/employees/{id}")
@@ -44,9 +45,9 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/employees/{id}")
-    public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
+    public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
-        Map<String, Boolean> employee = employeeService.deleteEmployee(employeeId);
+        ResponseEntity<Map<String, Boolean>> employee = employeeService.deleteEmployee(employeeId);
         return employee;
     }
 }
