@@ -21,29 +21,26 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public ResponseEntity<Employee> getEmployeeById(Long employeeId)
+    public Employee getEmployeeById(Long employeeId)
             throws ResourceNotFoundException {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :" + employeeId));
-        return ResponseEntity.ok(employee);
+        return employee;
     }
 
-    public ResponseEntity<Employee> createEmployee(Employee employee) {
-        Employee employeecreate = employeeRepository.save(employee);
-        return ResponseEntity.ok(employeecreate);
+    public Employee createEmployee(Employee employee){
+        return employeeRepository.save(employee);
     }
 
-
-    public ResponseEntity<Employee> updateEmployee(Long employeeId, Employee employeeDetails) throws ResourceNotFoundException {
+    public Employee updateEmployee(Long employeeId, Employee employeeDetails) throws ResourceNotFoundException {
         Employee employeeUpdate = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id : " + employeeId));
         employeeUpdate.setEmailId(employeeDetails.getEmailId());
         employeeUpdate.setLastName(employeeDetails.getLastName());
         employeeUpdate.setFirstName(employeeDetails.getFirstName());
-        Employee updatedEmployee = employeeRepository.save(employeeUpdate);
-        return ResponseEntity.ok(updatedEmployee);
+        return employeeRepository.save(employeeUpdate);
     }
 
-    public ResponseEntity<Map<String, Boolean>> deleteEmployee(Long employeeId)
+    public Map<String, Boolean> deleteEmployee(Long employeeId)
             throws ResourceNotFoundException {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :" + employeeId));
@@ -51,6 +48,6 @@ public class EmployeeService {
         Map<String, Boolean> response = new HashMap<String, Boolean>(){{
             put("deleted",Boolean.TRUE);
         }};
-        return ResponseEntity.ok(response);
+        return response;
     }
 }

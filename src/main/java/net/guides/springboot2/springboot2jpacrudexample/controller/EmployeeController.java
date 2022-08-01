@@ -20,34 +20,32 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
-        List<Employee> employees = employeeService.getAllEmployees();
-        return employees;
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable(value = "id") Long employeeId) throws ResourceNotFoundException {
-        ResponseEntity<Employee> employeeOptional = employeeService.getEmployeeById(employeeId);
-        return employeeOptional;
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        return ResponseEntity.ok(employee);
     }
 
     @PostMapping("/employees")
-    public ResponseEntity <Employee> createEmployee(@Valid @RequestBody Employee employee) {
-        ResponseEntity<Employee> employeecreate = employeeService.createEmployee(employee);
-        return employeecreate;
+    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
+        Employee employeeCreate = employeeService.createEmployee(employee);
+        return ResponseEntity.ok(employeeCreate);
     }
 
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable(value = "id") Long employeeId,
                                                    @Valid @RequestBody Employee employeeDetails) throws ResourceNotFoundException {
-        ResponseEntity<Employee> employee = employeeService.updateEmployee(employeeId, employeeDetails);
-        return employee;
-
+        Employee employeeUpdated = employeeService.updateEmployee(employeeId, employeeDetails);
+        return ResponseEntity.ok(employeeUpdated);
     }
 
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteEmployee(@PathVariable(value = "id") Long employeeId)
             throws ResourceNotFoundException {
-        ResponseEntity<Map<String, Boolean>> employee = employeeService.deleteEmployee(employeeId);
-        return employee;
+        Map<String, Boolean> employeeDelete = employeeService.deleteEmployee(employeeId);
+        return ResponseEntity.ok(employeeDelete);
     }
 }
