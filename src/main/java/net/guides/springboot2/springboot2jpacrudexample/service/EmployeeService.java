@@ -24,7 +24,7 @@ public class EmployeeService {
     public ResponseEntity<Employee> getEmployeeById(Long employeeId)
             throws ResourceNotFoundException {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :" + employeeId));
-        return ResponseEntity.ok().body(employee);
+        return ResponseEntity.ok(employee);
     }
 
     public ResponseEntity<Employee> createEmployee(Employee employee) {
@@ -48,8 +48,9 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found for this id :" + employeeId));
         employeeRepository.delete(employee);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
+        Map<String, Boolean> response = new HashMap<String, Boolean>(){{
+            put("deleted",Boolean.TRUE);
+        }};
         return ResponseEntity.ok(response);
     }
 }
